@@ -1,0 +1,7 @@
+"0",""
+"0","# multivariate nurmality test "
+"0",""
+"0","mv<-mardia(simData)"
+"0","mv"
+"1","$mv.test
+"

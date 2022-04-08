@@ -1,0 +1,20 @@
+"0",""
+"0",""
+"0","medmodel<-'"
+"0","y~c*x"
+"0","m~a*x"
+"0","y~b*m"
+"0","# indirect effect (a*b)"
+"0","ab:=a*b"
+"0","# total effect"
+"0","total:=c+(a*b)"
+"0",""
+"2","Error: Incomplete expression: medmodel<-'
+y~c*x
+m~a*x
+y~b*m
+# indirect effect (a*b)
+ab:=a*b
+# total effect
+total:=c+(a*b)
+"

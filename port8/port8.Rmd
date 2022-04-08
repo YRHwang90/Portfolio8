@@ -1,0 +1,243 @@
+---
+title: "Untitled"
+author: "Yoo Ri Hwang"
+date: "3/28/2022"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Overview
+
+In this project, I tried SEM.. like licking the surface of the SEM.
+
+.
+
+Also, I refered many materials (see the readme file).
+
+
+
+### What is SEM
+Source: in the readme file. 
+
+Structure Equation Modeling (SEM) analysis the network of relationship between the variables (including latent constructs, and measured variable ).
+
+Unlike other conventional stat techniques, SES reqiures model specification( including measurement error specification)
+
+SES is linear statistics technique, and do not provide causality test.
+
+Keep in mind that SES do not provide default model. 
+SEM has a powerful weapon- intuitive visulaization.
+
+*Goals*
+1) patterns of cov/cor among the variables
+2) how much variance can be explianed by this specificed model. 
+
+
+### Packages
+
+
+```{r}
+
+
+library(lavaan)
+library(tidyverse)
+library(psych)
+library(MASS)
+library(mvnormalTest)
+library(semPlot)
+
+```
+
+
+### Simulate the data
+
+```{r}
+demo.model <- '
+y ~ .5*f 
+
+f =~ .8*x1 + .8*x2 + .8*x3 + .8*x4 + .8*x5  
+
+x1 ~~ (1-.8^2)*x1
+x2 ~~ (1-.8^2)*x2
+x3 ~~ (1-.8^2)*x3
+x4 ~~ (1-.8^2)*x4
+x5 ~~ (1-.8^2)*x5
+'
+simData <- lavaan::simulateData(demo.model, sample.nobs=200)
+
+# see the describtive stats
+psych::describe(simData)
+
+# multivariate nurmality test 
+
+mv<-mardia(simData)
+mv
+
+#?simulateData
+
+sim.cor <-cor(simData, use="pairwise.complete.obs", method="pearson")
+sim.cor
+
+```
+### specify the model 
+```{r}
+
+
+tofit.model <- '
+y ~ f 
+f =~ x1+ x2 + x3 + x4 + x5 
+x1 ~~ x1 
+x2 ~~ x2 
+x3~~x3 
+x4~~x4 
+x5~~x5 
+'
+
+tofit.model_m <- sem(tofit.model, simData)
+
+summary(tofit.model_m, fit.measures=T)
+inspect(tofit.model_m)
+semPlot::semPaths(tofit.model_m)
+```
+
+
+lavaan package's notation
+
+**~ : predict** 
+(y~x: y is predicted by x)
+
+**=~ : indicator**
+(latent variable =~ observed indicator)
+
+**~~** 
+Covariance
+
+
+**~1: intercept or mean **
+x~1 : mean of variable x
+
+**1*** fixed parameter or loading to one
+
+**NA*** frees parameter or loading 
+
+**a***labels the parameter 'a'
+for model constraints 
+
+## Simple regression 
+
+before going further, let's try simple regression
+
+```{r}
+
+hey<-lm(y~x2, simData)
+summary(hey)
+
+```
+
+results interpretaion:
+
+as one unit increase in x1, the y score improves approaximatly 0.508, and Significant. 
+the residual standard error is 1.087. 
+the residual variance is (1.087)^2 = 1.181569
+
+This can be done by Lavaan packages
+
+```{r}
+hey2<-'
+y ~ 1 + x2
+x2~~x2
+'
+
+hey2fit<-sem(hey2,data=simData)
+summary(hey2fit)
+semPlot::semPaths(hey2fit)
+
+```
+
+results interpretaion:
+
+the regression coifficient (0.508) is the same.
+
+However, some difference is here. ML and OLS provide different residual variance but the same coefficients. 
+
+
+## Path analysis
+
+What is different between SEM and path analysis?
+
+"SEM is a combination of multiple regression and factor analysis. Path analysis deals only with measured variables. two or more measured variables"
+(Source:https://theicph.com/wp-content/uploads/2016/09/How-to-conduct-Path-Analysis-and-SEM-for-Health-Research_24-Sep-2016_Prof-Bhisma-Murti.pdf)
+####  Data simulation 
+```{r}
+
+set.seed(1234)
+x<-rnorm(100)
+m<-0.5*x + rnorm(100)
+y<-0.7*m + rnorm(100)
+data <-data.frame(x=x,m=m,y=y)
+
+
+
+```
+
+#### model specification 
+
+```{r}
+
+
+medmodel<-'
+y~c*x
+m~a*x
+y~b*m
+# indirect effect (a*b)
+ab:=a*b
+# total effect
+total:=c+(a*b)
+'
+
+```
+
+
+```{r}
+medmodel_m<-sem(medmodel, data=data)
+summary(medmodel_m, fit.measures=T)
+semPaths(medmodel_m)
+```
+
+## Confirmatory factor analysls
+load the data 
+```{r}
+library(foreign)
+dat <- read.spss("https://stats.idre.ucla.edu/wp-content/uploads/2018/05/SAQ.sav",
+                                             to.data.frame=TRUE, use.value.labels = FALSE)
+head(dat,10)
+
+
+```
+8 items, with one factor 
+```{r}
+
+cfa<- '
+f =~ q01 + q02 + q03 + q04 + q05 + q06 + q07 + q08'
+
+cfa8<- cfa(cfa, data=dat, std.lv=TRUE)
+#std.lv=T automatically standardize the variance. 
+
+summary(cfa8, fit.measures=T, standardized=T)
+semPaths(cfa8)
+```
+
+interpretaion 
+
+
+```{r}
+round(cor(dat[,1:8]),2)
+
+
+```
+q 02, it is only  -.23.
+If we see the corr table, also can find that q02 is weakly associated with other questions. 
+q03, 
