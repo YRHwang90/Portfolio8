@@ -125,13 +125,13 @@ simData <- lavaan::simulateData(demo.model, sample.nobs=200)
 psych::describe(simData)
 ```
 
-    ##    vars   n  mean   sd median trimmed  mad   min  max range  skew kurtosis   se
-    ## x1    1 200 -0.15 1.03  -0.14   -0.15 1.15 -2.73 2.50  5.23  0.00    -0.46 0.07
-    ## x2    2 200 -0.14 1.04  -0.04   -0.14 1.01 -2.86 3.34  6.20  0.10     0.27 0.07
-    ## x3    3 200 -0.17 0.95  -0.19   -0.18 1.02 -2.82 2.44  5.26  0.07    -0.38 0.07
-    ## x4    4 200 -0.15 0.94  -0.18   -0.15 0.92 -2.58 3.12  5.70  0.12     0.08 0.07
-    ## x5    5 200 -0.11 1.01  -0.14   -0.11 0.96 -2.89 2.53  5.42 -0.03     0.23 0.07
-    ## y     6 200 -0.07 1.17   0.00   -0.04 1.16 -3.48 2.75  6.22 -0.25    -0.29 0.08
+    ##    vars   n mean   sd median trimmed  mad   min  max range  skew kurtosis   se
+    ## x1    1 200 0.04 1.00  -0.01    0.03 1.09 -2.42 2.70  5.13  0.11    -0.42 0.07
+    ## x2    2 200 0.09 1.06   0.04    0.10 1.17 -2.84 3.26  6.10 -0.03    -0.08 0.08
+    ## x3    3 200 0.08 1.04   0.09    0.09 1.10 -2.97 2.82  5.80 -0.02    -0.06 0.07
+    ## x4    4 200 0.08 1.05   0.07    0.05 1.02 -3.23 3.04  6.27  0.06     0.55 0.07
+    ## x5    5 200 0.05 0.96   0.07    0.03 0.88 -2.71 2.89  5.59  0.18     0.06 0.07
+    ## y     6 200 0.03 1.21  -0.05    0.02 1.29 -3.45 4.19  7.64  0.16     0.11 0.09
 
 ``` r
 # multivariate nurmality test 
@@ -142,18 +142,18 @@ mv
 
     ## $mv.test
     ##           Test Statistic p-value Result
-    ## 1     Skewness    69.354  0.1083    YES
-    ## 2     Kurtosis    1.9141  0.0556    YES
+    ## 1     Skewness   66.6252  0.1565    YES
+    ## 2     Kurtosis   -0.0261  0.9791    YES
     ## 3 MV Normality      <NA>    <NA>    YES
     ## 
     ## $uv.shapiro
     ##    W      p-value UV.Normality
-    ## x1 0.9921 0.3552  Yes         
-    ## x2 0.9915 0.2899  Yes         
-    ## x3 0.9939 0.5868  Yes         
-    ## x4 0.996  0.8816  Yes         
-    ## x5 0.9915 0.2921  Yes         
-    ## y  0.9917 0.3117  Yes
+    ## x1 0.9946 0.6976  Yes         
+    ## x2 0.9947 0.7045  Yes         
+    ## x3 0.9961 0.8975  Yes         
+    ## x4 0.9882 0.0967  Yes         
+    ## x5 0.9942 0.6378  Yes         
+    ## y  0.9936 0.5365  Yes
 
 ``` r
 #?simulateData
@@ -163,12 +163,12 @@ sim.cor
 ```
 
     ##           x1        x2        x3        x4        x5         y
-    ## x1 1.0000000 0.6851298 0.6561533 0.5479948 0.6677087 0.3790414
-    ## x2 0.6851298 1.0000000 0.6483435 0.6048185 0.6455084 0.3279315
-    ## x3 0.6561533 0.6483435 1.0000000 0.6469401 0.6632005 0.3704600
-    ## x4 0.5479948 0.6048185 0.6469401 1.0000000 0.6130108 0.3236153
-    ## x5 0.6677087 0.6455084 0.6632005 0.6130108 1.0000000 0.4463597
-    ## y  0.3790414 0.3279315 0.3704600 0.3236153 0.4463597 1.0000000
+    ## x1 1.0000000 0.6171676 0.6159865 0.6725076 0.6514285 0.3618392
+    ## x2 0.6171676 1.0000000 0.6245594 0.6788454 0.6601711 0.3678013
+    ## x3 0.6159865 0.6245594 1.0000000 0.6543427 0.6064226 0.3477286
+    ## x4 0.6725076 0.6788454 0.6543427 1.0000000 0.6776664 0.3269674
+    ## x5 0.6514285 0.6601711 0.6064226 0.6776664 1.0000000 0.3085030
+    ## y  0.3618392 0.3678013 0.3477286 0.3269674 0.3085030 1.0000000
 
 ### specify the model
 
@@ -188,7 +188,7 @@ tofit.model_m <- sem(tofit.model, simData)
 summary(tofit.model_m, fit.measures=T)
 ```
 
-    ## lavaan 0.6-10 ended normally after 21 iterations
+    ## lavaan 0.6-10 ended normally after 20 iterations
     ## 
     ##   Estimator                                         ML
     ##   Optimization method                           NLMINB
@@ -198,40 +198,40 @@ summary(tofit.model_m, fit.measures=T)
     ##                                                       
     ## Model Test User Model:
     ##                                                       
-    ##   Test statistic                                13.659
+    ##   Test statistic                                 4.465
     ##   Degrees of freedom                                 9
-    ##   P-value (Chi-square)                           0.135
+    ##   P-value (Chi-square)                           0.878
     ## 
     ## Model Test Baseline Model:
     ## 
-    ##   Test statistic                               621.368
+    ##   Test statistic                               619.351
     ##   Degrees of freedom                                15
     ##   P-value                                        0.000
     ## 
     ## User Model versus Baseline Model:
     ## 
-    ##   Comparative Fit Index (CFI)                    0.992
-    ##   Tucker-Lewis Index (TLI)                       0.987
+    ##   Comparative Fit Index (CFI)                    1.000
+    ##   Tucker-Lewis Index (TLI)                       1.013
     ## 
     ## Loglikelihood and Information Criteria:
     ## 
-    ##   Loglikelihood user model (H0)              -1421.499
-    ##   Loglikelihood unrestricted model (H1)      -1414.670
+    ##   Loglikelihood user model (H0)              -1451.644
+    ##   Loglikelihood unrestricted model (H1)      -1449.411
     ##                                                       
-    ##   Akaike (AIC)                                2866.998
-    ##   Bayesian (BIC)                              2906.578
-    ##   Sample-size adjusted Bayesian (BIC)         2868.561
+    ##   Akaike (AIC)                                2927.287
+    ##   Bayesian (BIC)                              2966.867
+    ##   Sample-size adjusted Bayesian (BIC)         2928.850
     ## 
     ## Root Mean Square Error of Approximation:
     ## 
-    ##   RMSEA                                          0.051
+    ##   RMSEA                                          0.000
     ##   90 Percent confidence interval - lower         0.000
-    ##   90 Percent confidence interval - upper         0.102
-    ##   P-value RMSEA <= 0.05                          0.434
+    ##   90 Percent confidence interval - upper         0.039
+    ##   P-value RMSEA <= 0.05                          0.971
     ## 
     ## Standardized Root Mean Square Residual:
     ## 
-    ##   SRMR                                           0.025
+    ##   SRMR                                           0.015
     ## 
     ## Parameter Estimates:
     ## 
@@ -243,25 +243,25 @@ summary(tofit.model_m, fit.measures=T)
     ##                    Estimate  Std.Err  z-value  P(>|z|)
     ##   f =~                                                
     ##     x1                1.000                           
-    ##     x2                1.005    0.080   12.554    0.000
-    ##     x3                0.928    0.072   12.829    0.000
-    ##     x4                0.830    0.074   11.288    0.000
-    ##     x5                0.996    0.077   12.867    0.000
+    ##     x2                1.080    0.088   12.338    0.000
+    ##     x3                1.011    0.086   11.707    0.000
+    ##     x4                1.120    0.086   13.044    0.000
+    ##     x5                0.979    0.079   12.355    0.000
     ## 
     ## Regressions:
     ##                    Estimate  Std.Err  z-value  P(>|z|)
     ##   y ~                                                 
-    ##     f                 0.654    0.100    6.553    0.000
+    ##     f                 0.644    0.109    5.886    0.000
     ## 
     ## Variances:
     ##                    Estimate  Std.Err  z-value  P(>|z|)
-    ##    .x1                0.371    0.047    7.938    0.000
-    ##    .x2                0.380    0.048    7.968    0.000
-    ##    .x3                0.294    0.038    7.753    0.000
-    ##    .x4                0.393    0.045    8.668    0.000
-    ##    .x5                0.334    0.043    7.721    0.000
-    ##    .y                 1.072    0.111    9.702    0.000
-    ##     f                 0.694    0.104    6.687    0.000
+    ##    .x1                0.364    0.045    8.157    0.000
+    ##    .x2                0.395    0.049    8.019    0.000
+    ##    .x3                0.433    0.051    8.422    0.000
+    ##    .x4                0.321    0.044    7.369    0.000
+    ##    .x5                0.323    0.040    8.006    0.000
+    ##    .y                 1.191    0.122    9.771    0.000
+    ##     f                 0.625    0.095    6.542    0.000
 
 ``` r
 inspect(tofit.model_m)
@@ -331,19 +331,19 @@ summary(hey)
     ## lm(formula = y ~ x2, data = simData)
     ## 
     ## Residuals:
-    ##     Min      1Q  Median      3Q     Max 
-    ## -3.5744 -0.8278  0.0633  0.7322  2.5375 
+    ##      Min       1Q   Median       3Q      Max 
+    ## -2.77322 -0.80673 -0.01367  0.79818  3.07523 
     ## 
     ## Coefficients:
-    ##             Estimate Std. Error t value Pr(>|t|)    
-    ## (Intercept) -0.02155    0.07925  -0.272    0.786    
-    ## x2           0.36900    0.07555   4.885 2.13e-06 ***
+    ##              Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept) -0.004453   0.079867  -0.056    0.956    
+    ## x2           0.417907   0.075088   5.566 8.42e-08 ***
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
     ## 
-    ## Residual standard error: 1.111 on 198 degrees of freedom
-    ## Multiple R-squared:  0.1075, Adjusted R-squared:  0.103 
-    ## F-statistic: 23.86 on 1 and 198 DF,  p-value: 2.134e-06
+    ## Residual standard error: 1.125 on 198 degrees of freedom
+    ## Multiple R-squared:  0.1353, Adjusted R-squared:  0.1309 
+    ## F-statistic: 30.98 on 1 and 198 DF,  p-value: 8.42e-08
 
 results interpretaion:
 
@@ -385,17 +385,17 @@ summary(hey2fit)
     ## Regressions:
     ##                    Estimate  Std.Err  z-value  P(>|z|)
     ##   y ~                                                 
-    ##     x2                0.369    0.075    4.909    0.000
+    ##     x2                0.418    0.075    5.594    0.000
     ## 
     ## Intercepts:
     ##                    Estimate  Std.Err  z-value  P(>|z|)
-    ##    .y                -0.022    0.079   -0.273    0.785
-    ##     x2               -0.139    0.074   -1.887    0.059
+    ##    .y                -0.004    0.079   -0.056    0.955
+    ##     x2                0.090    0.075    1.206    0.228
     ## 
     ## Variances:
     ##                    Estimate  Std.Err  z-value  P(>|z|)
-    ##     x2                1.081    0.108   10.000    0.000
-    ##    .y                 1.222    0.122   10.000    0.000
+    ##     x2                1.123    0.112   10.000    0.000
+    ##    .y                 1.254    0.125   10.000    0.000
 
 ``` r
 semPlot::semPaths(hey2fit)
